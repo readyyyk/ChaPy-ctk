@@ -67,3 +67,13 @@ class MMessage(Message):
         text_label.grid(row=0, column=0)
 
         self.render(sticky="e")
+
+
+class SMessage(Message):
+    def __init__(self, master, text, row, **kwargs):
+        super().__init__(master, text, "", row, False, fg_color="dark grey", **kwargs)
+
+        text_label = ctk.CTkLabel(self, text=text, justify="center")
+        text_label.grid(row=0, column=0)
+
+        self.render(sticky="")

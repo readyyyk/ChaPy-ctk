@@ -11,5 +11,5 @@ class Toast(ctk.CTkFrame):
         self.toast_content = ctk.CTkLabel(self, text=text)
         self.toast_content.grid(row=0, column=0, padx=20, pady=10)
 
-        self.place(relx=.987, rely=.989, anchor="se")
+        self.place(relx=.987, rely=.011, anchor="ne")
         self.after(5000, self.destroy)
