@@ -33,5 +33,5 @@ class ChatInfo(ctk.CTkFrame):
         self.add_user("Me")
         self.user_list_label.grid(row=0, column=2, padx=(10, 20), sticky='e')
 
-        self.grid(row=0, column=0, sticky="nwe", ipady=10)
-
+        # self.grid(row=0, column=0, sticky="nwe", ipady=10)
+        self.pack(expand=True, fill="x", ipady=10, anchor="n")

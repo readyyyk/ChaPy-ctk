@@ -18,7 +18,8 @@ class ChatInput(ctk.CTkFrame):
         button = ctk.CTkButton(self, width=80, fg_color="green", hover_color="dark green", text="send", command=self.submit, font=font)
         button.grid(row=0, column=1, padx=(0, 10))
 
-        self.grid(row=2, column=0, sticky="swe", ipadx=10, ipady=10)
+        # self.grid(row=2, column=0, sticky="swe", ipadx=10, ipady=10)
+        self.pack(expand=True, fill="x", ipadx=10, ipady=10, anchor="s")
 
     def submit(self):
         self.on_submit(self.input.get())

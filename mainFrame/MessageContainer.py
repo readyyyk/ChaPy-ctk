@@ -17,9 +17,10 @@ class MessageContainer(ctk.CTkScrollableFrame):
         self.last_sender = sender
 
     def __init__(self, master, **kwargs):
-        super().__init__(master, **kwargs)
+        super().__init__(master, height=600, **kwargs)
 
         self.grid_rowconfigure(0, weight=1)
         self.grid_columnconfigure(0, weight=1)
 
-        self.grid(row=1, column=0, sticky="nsew", ipadx=10, ipady=10)
+        self.pack(expand=True, fill="both", ipadx=10, ipady=10)
+        # self.grid(row=1, column=0, sticky="new", ipadx=10, ipady=10)

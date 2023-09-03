@@ -15,8 +15,8 @@ class MainFrame(ctk.CTkFrame):
     def __init__(self, master, connect_data, **kwargs):
         super().__init__(master, **kwargs)
 
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_columnconfigure(0, weight=1)
+        # self.grid_rowconfigure(0, weight=1)
+        # self.grid_columnconfigure(0, weight=1)
 
         chat_info = ChatInfo(self, connect_data["chat_id"], connect_data["name"])
 
