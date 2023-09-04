@@ -1,6 +1,7 @@
 import json
 from threading import Thread
 import websocket
+import atexit
 from mainFrame.Toast import Toast
 
 
@@ -53,4 +54,7 @@ class WSProcessor:
         )
 
         self.ws_thread = Thread(target=self.ws.run_forever)
+
+        atexit.register(self.ws.close)
+
         self.ws_thread.start()
