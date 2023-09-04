@@ -14,6 +14,7 @@ class ChatInput(ctk.CTkFrame):
 
         self.input = ctk.CTkEntry(self, placeholder_text="Input your message...", font=font)
         self.input.grid(row=0, column=0, sticky="we", padx=(10, 10))
+        self.input.bind("<Return>", lambda _: self.submit())
 
         button = ctk.CTkButton(self, width=80, fg_color="green", hover_color="dark green", text="send", command=self.submit, font=font)
         button.grid(row=0, column=1, padx=(0, 10))

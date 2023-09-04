@@ -63,6 +63,7 @@ class IntroFrame(ctk.CTkFrame):
 
         self.chat_entry = ctk.CTkEntry(self, placeholder_text="ABCDE")
         self.chat_entry.grid(row=0, column=1, padx=(0, 20), pady=(20, 0))
+        self.chat_entry.bind("<Return>", lambda _: self.submit())
 
         # name
         self.name_label = ctk.CTkLabel(self, text="Name: ")
@@ -70,6 +71,7 @@ class IntroFrame(ctk.CTkFrame):
 
         self.name_entry = ctk.CTkEntry(self, placeholder_text="Vasya")
         self.name_entry.grid(row=1, column=1, padx=(0, 20), pady=(15, 0))
+        self.name_entry.bind("<Return>", lambda _: self.submit())
 
         # submit
         self.btn = ctk.CTkButton(self, text="Submit", fg_color="green", hover_color="dark green", width=100, command=self.submit)
