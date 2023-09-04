@@ -53,7 +53,7 @@ class WSProcessor:
             on_error=lambda _, a: print(a)
         )
 
-        self.ws_thread = Thread(target=self.ws.run_forever)
+        self.ws_thread = Thread(target=self.ws.run_forever, daemon=True)
 
         atexit.register(self.ws.close)
 

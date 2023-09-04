@@ -1,3 +1,5 @@
+import sys
+
 import customtkinter as ctk
 
 from IntroFrame import IntroFrame
@@ -9,7 +11,7 @@ app = ctk.CTk()
 app.title("ChaPy")
 app.geometry("600x800")
 
-app.iconbitmap("favicon.ico")
+app.iconbitmap(sys.executable)
 # app.resizable(False, False)
 
 
@@ -27,4 +29,7 @@ def draw_main_frame():
 intro_frame = IntroFrame(app, draw_main_frame)
 intro_frame.grid(row=0, column=0)
 
-app.mainloop()
+
+if __name__ == "__main__":
+    app.mainloop()
+    sys.exit(0)

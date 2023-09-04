@@ -1,4 +1,5 @@
 websocket-client
 customtkinter
+pyinstaller
 requests
 Pillow

@@ -1,0 +1,1 @@
+pyinstaller -n chapy --icon=favicon.ico -w -F main.py

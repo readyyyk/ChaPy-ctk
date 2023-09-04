@@ -1,4 +1,3 @@
-import atexit
 from threading import Thread
 
 import customtkinter as ctk
@@ -41,7 +40,7 @@ class IntroFrame(ctk.CTkFrame):
             self.errors.configure(text="Enter name!", bg_color="#7f1d1d")
             return
 
-        self.fetch_thread = Thread(target=self.fetch, args=(chat_id, name))
+        self.fetch_thread = Thread(target=self.fetch, args=(chat_id, name), daemon=True)
         self.fetch_thread.start()
 
     def get_connect_data(self):
