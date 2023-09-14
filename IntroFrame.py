@@ -1,17 +1,19 @@
 from threading import Thread
 
 import customtkinter as ctk
+import jwt
 import requests
 
 from _consts import SERVER_URL
 
 
 class IntroFrame(ctk.CTkFrame):
-    name = None
-    chat_id = None
-    ws_link = None
-    fetch_thread = None
-    is_first_render = True
+    key: str
+    name: str
+    chat_id: str
+    ws_link: str
+    fetch_thread: Thread
+    is_first_render: bool = True
 
     def fetch(self, chat_id, name):
         res = requests.get(SERVER_URL + f"/{chat_id}/connect?name={name}")
@@ -22,6 +24,12 @@ class IntroFrame(ctk.CTkFrame):
         self.chat_id = chat_id
         self.name = name
         self.ws_link = res.json()["wsLink"]
+        decoded_jwt = jwt.decode(
+            self.ws_link[self.ws_link.index("token=")+6:],
+            options={"verify_signature": False},
+        )
+        self.key = decoded_jwt["key"]
+
         self.callback()
 
     def submit(self):
@@ -48,6 +56,7 @@ class IntroFrame(ctk.CTkFrame):
             "ws_link": self.ws_link,
             "chat_id": self.chat_id,
             "name": self.name,
+            "key": self.key,
         }
 
     def __init__(self, master, callback, **kwargs):

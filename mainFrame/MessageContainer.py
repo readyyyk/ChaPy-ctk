@@ -23,4 +23,3 @@ class MessageContainer(ctk.CTkScrollableFrame):
         self.grid_columnconfigure(0, weight=1)
 
         self.pack(expand=True, fill="both", ipadx=10, ipady=10)
-        # self.grid(row=1, column=0, sticky="new", ipadx=10, ipady=10)

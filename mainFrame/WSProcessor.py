@@ -4,24 +4,32 @@ import websocket
 import atexit
 from mainFrame.Toast import Toast
 
+from mainFrame.encoding import AESCipher
+
 
 class WSProcessor:
     ws = None
     name = None
     ws_link = None
+    encoder: AESCipher
     ws_thread = None
 
     def send_message(self, text):
-        self.ws.send(json.dumps({
+        data_json = json.dumps({
             "event": "message",
             "data": json.dumps({
                 "sender": self.name,
                 "text": text,
             })
-        }, separators=(',', ':')))
+        }, separators=(',', ':'))
+        data, iv = self.encoder.encrypt(data_json)
+
+        self.ws.send(json.dumps({"data": data.decode("utf-8"), "iv": iv}))
 
     def process_ws_message(self, _, data_json: str):
-        ev_data = json.loads(data_json)
+        encoded_data = json.loads(data_json)
+        decoded: str = self.encoder.decrypt(encoded_data["data"], encoded_data["iv"]).decode("utf-8")
+        ev_data = json.loads(decoded)
         print(data_json)
         match ev_data["event"]:
             case "connection":
@@ -39,6 +47,7 @@ class WSProcessor:
 
     def __init__(self, master, connect_data, render_message, add_user, remove_user):
         self.add_user = add_user
+        self.encoder = AESCipher(connect_data["key"])
         self.remove_user = remove_user
         self.render_message = render_message
 
