@@ -1,7 +1,11 @@
 import json
 from threading import Thread
+
+import requests
 import websocket
 import atexit
+
+from _consts import SERVER_URL
 from mainFrame.Toast import Toast
 
 from mainFrame.encoding import AESCipher
@@ -13,6 +17,12 @@ class WSProcessor:
     ws_link = None
     encoder: AESCipher
     ws_thread = None
+
+    def get_connected(self):
+        connected = requests.get(SERVER_URL + f"/{self.connect_data['chat_id']}/names").json()
+        if self.connect_data["name"] not in connected:
+            connected = [self.connect_data["name"]] + connected
+        self.add_users(connected)
 
     def send_message(self, text):
         data_json = json.dumps({
@@ -36,7 +46,7 @@ class WSProcessor:
                 msg_data = json.loads(ev_data["data"])
                 self.render_message(f"{msg_data['name']} {msg_data['detail']}", "server")
 
-                if msg_data["detail"] == "connected" and msg_data["name"] != self.name:
+                if msg_data["detail"] == "connected" and msg_data["name"] != self.connect_data["name"]:
                     self.add_users([msg_data['name']])
                 elif msg_data["detail"] == "disconnected":
                     self.remove_user(msg_data['name'])
@@ -50,10 +60,11 @@ class WSProcessor:
         self.encoder = AESCipher(connect_data["key"])
         self.remove_user = remove_user
         self.render_message = render_message
-
-        self.name = connect_data["name"]
+        self.connect_data = connect_data
 
         websocket.enableTrace(True)
+
+        Thread(target=self.get_connected, daemon=True).start()
 
         self.ws = websocket.WebSocketApp(
             url=connect_data["ws_link"],

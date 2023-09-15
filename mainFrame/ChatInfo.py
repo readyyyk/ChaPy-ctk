@@ -33,10 +33,7 @@ class ChatInfo(ctk.CTkFrame):
         name_label = ctk.CTkLabel(self, text=f" - {name}", font=("sans-serif", 32), text_color="#4477CE")
         name_label.grid(row=0, column=1, padx=(0, 20))
 
-        self.user_list_label = ctk.CTkLabel(self, font=("sans-serif", 20), text_color="#8CABFF")
-
-        self.add_users(["Me"])
-        Thread(target=lambda: self.add_users(requests.get(SERVER_URL + f"/{chat_id}/names").json()), daemon=True).start()
+        self.user_list_label = ctk.CTkLabel(self, text="", font=("sans-serif", 20), text_color="#8CABFF")
 
         self.user_list_label.grid(row=0, column=2, padx=(10, 20), sticky='e')
 
