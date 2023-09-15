@@ -1,2 +1,8 @@
-SERVER_URL = "https://r-chapy-server.fly.dev"
-AVATAR_API_URL = "https://r-randimg-py.fly.dev"
+from os import getenv
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+SERVER_URL = getenv("SERVER_URL")
+AVATAR_API_URL = getenv("AVATAR_API_URL")

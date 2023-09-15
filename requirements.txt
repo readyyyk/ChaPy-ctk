@@ -2,4 +2,5 @@ websocket-client
 customtkinter
 pyinstaller
 requests
+dotenv
 Pillow

@@ -1,5 +1,9 @@
-import customtkinter as ctk
+from threading import Thread
 from functools import reduce
+import customtkinter as ctk
+import requests
+
+from _consts import SERVER_URL
 
 
 class ChatInfo(ctk.CTkFrame):
@@ -9,8 +13,8 @@ class ChatInfo(ctk.CTkFrame):
         self.user_list.remove(name)
         self.render_user_list()
 
-    def add_user(self, name: str):
-        self.user_list.append(name)
+    def add_users(self, names: list[str]):
+        self.user_list = self.user_list + names
         self.render_user_list()
 
     def render_user_list(self):
@@ -30,7 +34,10 @@ class ChatInfo(ctk.CTkFrame):
         name_label.grid(row=0, column=1, padx=(0, 20))
 
         self.user_list_label = ctk.CTkLabel(self, font=("sans-serif", 20), text_color="#8CABFF")
-        self.add_user("Me")
+
+        self.add_users(["Me"])
+        Thread(target=lambda: self.add_users(requests.get(SERVER_URL + f"/{chat_id}/names").json()), daemon=True).start()
+
         self.user_list_label.grid(row=0, column=2, padx=(10, 20), sticky='e')
 
         # self.grid(row=0, column=0, sticky="nwe", ipady=10)

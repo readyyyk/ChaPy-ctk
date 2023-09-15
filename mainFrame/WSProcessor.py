@@ -37,7 +37,7 @@ class WSProcessor:
                 self.render_message(f"{msg_data['name']} {msg_data['detail']}", "server")
 
                 if msg_data["detail"] == "connected" and msg_data["name"] != self.name:
-                    self.add_user(msg_data['name'])
+                    self.add_users([msg_data['name']])
                 elif msg_data["detail"] == "disconnected":
                     self.remove_user(msg_data['name'])
 
@@ -45,8 +45,8 @@ class WSProcessor:
                 msg_data = json.loads(ev_data["data"])
                 self.render_message(msg_data["text"], msg_data["sender"] if "sender" in msg_data else "")
 
-    def __init__(self, master, connect_data, render_message, add_user, remove_user):
-        self.add_user = add_user
+    def __init__(self, master, connect_data, render_message, add_users, remove_user):
+        self.add_users = add_users
         self.encoder = AESCipher(connect_data["key"])
         self.remove_user = remove_user
         self.render_message = render_message

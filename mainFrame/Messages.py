@@ -42,7 +42,7 @@ class Message(ctk.CTkFrame):
 
 class UMessage(Message):
     def __init__(self, master, text, sender, row, same_sender=False, **kwargs):
-        super().__init__(master, text, sender, row, same_sender, fg_color="#35155D", **kwargs)
+        super().__init__(master, text, sender, row, same_sender, fg_color="#6d1688", **kwargs)
 
         im = get_logo(sender)
 

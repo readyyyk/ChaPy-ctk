@@ -21,6 +21,6 @@ class MainFrame(ctk.CTkFrame):
         chat_info = ChatInfo(self, connect_data["chat_id"], connect_data["name"])
 
         msg_container = MessageContainer(self)
-        ws_p = WSProcessor(master, connect_data, msg_container.render_message, chat_info.add_user, chat_info.remove_user)
+        ws_p = WSProcessor(master, connect_data, msg_container.render_message, chat_info.add_users, chat_info.remove_user)
 
         ChatInput(self, ws_p.send_message)
